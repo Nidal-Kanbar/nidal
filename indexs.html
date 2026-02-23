@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نضال قنبر | البداية نحو الاحتراف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style> 
+         .card {
+         position: relative;
+         overflow: hidden;
+         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover {
+         transform: translateY(-12px); /* رفع البطاقة */
+         box-shadow: 0 15px 30px rgba(0, 210, 255, 0.3); /* توهج أزرق */
+         border-color: var(--accent);
+        }
+
+        /* حركة الشعاع الضوئي الذي يمر فوق البطاقة */
+        .card::before {
+         content: '';
+         position: absolute;
+         top: -50%;
+         left: -50%;
+         width: 200%;
+         height: 200%;
+         background: rgba(255,255,255,0.05);
+         transform: rotate(45deg);
+         transition: 0.6s;
+         pointer-events: none;
+        }
+
+        .card:hover::before {
+          left: 100%;
+        }
+        :root {
+            --primary: #1a1a2e;
+            --accent: #00d2ff;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --skill-bg: #334155;
+            --success: #10b981;
+        }
+        [data-theme="light"] {
+            --primary: #f1f5f9;
+            --accent: #2563eb;
+            --bg: #ffffff;
+            --card-bg: #f8fafc;
+            --text: #0f172a;
+            --skill-bg: #e2e8f0;
+        }
+
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            transition: 0.3s; 
+            line-height: 1.7; 
+            scroll-behavior: smooth;
+        }
+        
+        header { 
+            background: var(--primary); 
+            padding: 3rem 1rem; 
+            text-align: center; 
+            border-bottom: 3px solid var(--accent); 
+            position: relative; 
+        }
+
+        .profile-img { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            border: 4px solid var(--accent); 
+            object-fit: cover; 
+            margin-bottom: 1rem; 
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3); 
+        }
+
+        .controls { position: absolute; top: 20px; left: 20px; }
+        .btn-ctrl { 
+            background: var(--accent); 
+            border: none; 
+            color: white; 
+            padding: 10px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 1.2rem; 
+            transition: 0.3s;
+        }
+        .btn-ctrl:hover { transform: rotate(15deg) scale(1.1); }
+
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            background: var(--card-bg); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            flex-wrap: wrap; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+        }
+        nav button { 
+            background: none; 
+            border: none; 
+            padding: 15px 20px; 
+            cursor: pointer; 
+            font-size: 0.9rem; 
+            font-weight: bold; 
+            color: var(--text); 
+            transition: 0.3s; 
+        }
+        nav button.active { border-bottom: 3px solid var(--accent); color: var(--accent); }
+
+        .container { max-width: 900px; margin: 20px auto; padding: 20px; }
+        
+        .tab-content { 
+            display: none; 
+            background: var(--card-bg); 
+            padding: 30px; 
+            border-radius: 15px; 
+            animation: fadeIn 0.5s ease; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        }
+        .tab-content.active { display: block; }
+
+        .milestone { 
+            background: rgba(16, 185, 129, 0.1); 
+            border: 1px dashed var(--success); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 25px; 
+            text-align: center; 
+        }
+        .milestone h2 { margin-top: 0; color: var(--success); font-size: 1.4rem; }
+
+        .info-list { 
+            list-style: none; 
+            padding: 0; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 10px; 
+            margin: 20px 0; 
+        }
+        .info-list li { 
+            padding: 12px; 
+            background: rgba(255,255,255,0.03); 
+            border-radius: 8px; 
+            border-right: 4px solid var(--accent); 
+        }
+
+        .skill-box { margin-bottom: 20px; }
+        .skill-name { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; }
+        .skill-bar { background: var(--skill-bg); height: 12px; border-radius: 6px; overflow: hidden; }
+        .skill-per { background: var(--accent); height: 100%; border-radius: 6px; transition: 1s ease-in-out; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(0,210,255,0.2); 
+            padding: 20px; 
+            border-radius: 12px; 
+            transition: 0.3s; 
+        }
+        .card:hover {
+          box-shadow: 0 0 15px var(--accent);
+          border-color: var(--accent);
+          transform: translateY(-10px);}
+
+        .social-links { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            gap: 12px; 
+            margin-top: 15px; 
+        }
+        .social-links a { 
+            color: var(--text); 
+            text-decoration: none; 
+            background: rgba(255,255,255,0.05); 
+            padding: 12px; 
+            border-radius: 10px; 
+            text-align: center; 
+            border: 1px solid rgba(0,210,255,0.1); 
+            transition: 0.3s; 
+            font-weight: bold; 
+        }
+        .social-links a:hover { background: var(--accent); color: white; transform: scale(1.05); }
+
+        blockquote { 
+            border-right: 5px solid var(--accent); 
+            margin: 25px 0; 
+            padding: 15px 25px; 
+            background: rgba(0, 210, 255, 0.05); 
+            font-style: italic; 
+            border-radius: 0 10px 10px 0;
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        @media (max-width: 600px) {
+            nav button { padding: 10px 15px; font-size: 0.8rem; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body data-theme="dark"> 
+
+<header>
+    <div class="controls">
+        <button class="btn-ctrl" onclick="toggleTheme()" title="تبديل الوضع">🌓</button>
+    </div>
+    <img src="https://j.top4top.io/p_35772cogx1.jpg" alt="نضال قنبر" class="profile-img">
+    <h1>نضال قنبر</h1>
+    <p>فنان | مبرمج  | كاتب</p>
+</header>
+
+<nav id="mainNav">
+    <button class="tab-btn active" onclick="openTab(event, 'about')">عني</button>
+    <button class="tab-btn" onclick="openTab(event, 'goals')">أهدافي</button>
+    <button class="tab-btn" onclick="openTab(event, 'art')">مواهبي</button>
+    <button class="tab-btn" onclick="openTab(event, 'book')">كتابي</button>
+    <button class="tab-btn" onclick="openTab(event, 'coding')">مشاريعي</button>
+    <button class="tab-btn" onclick="openTab(event, 'referrals')">منصاتي</button>
+    <button class="tab-btn" onclick="openTab(event, 'work')">تواصل معي</button>
+    <button class="tab-btn" onclick="openTab(event, 'payment')">الدفع والدعم</button>
+</nav>
+
+<div class="container">
+    <div class="milestone">
+        <h2>مرحباً بكم في رحلتي التقنية</h2>
+        <p>هنا أختصر لك التعقيد، وأقدم لك الفائدة بضغطة زر. تابعني لنكتشف عالم البرمجة والإبداع معاً.</p>
+    </div>
+
+    <div id="about" class="tab-content active">
+        <div class="milestone" style="background: rgba(0, 210, 255, 0.1); border-color: var(--accent);">
+            <span>📅 انطلقت رحلتي في عالم البرمجة:</span> <strong>01.01.2026</strong>
+        </div>
+
+        <h2>📌 المعلومات الشخصية</h2>
+        <ul class="info-list">
+            <li><strong>الاسم:</strong> نضال</li>
+            <li><strong>الميلاد:</strong> 2002</li>
+            <li><strong>المنشأ:</strong> عفرين</li>
+            <li><strong>الإقامة:</strong> ألمانيا (منذ 2024)</li>
+        </ul>
+
+        <h4>🎯 نبذة عني</h2>
+        <p>​أنا إنسان طموح يؤمن بأن الإرادة هي المفتاح الوحيد لتحويل الأحلام إلى واقع، مهما كانت التحديات.</p>
+        <p>عالمي التقني: أمتلك شغفاً كبيراً بمجال الإنترنت والبرمجة، وأعتبرها اللغة التي أشكل بها مستقبلي.</p>
+        <p>​بين السطور والرياضة: أجد نفسي في القراءة والرياضة؛ فبينهما يتوازن العقل والجسد. حالياً، أقوم بخطوة مميزة في حياتي وهي تأليف كتابي الخاص، ليكون صوتاً لأفكاري وتجاربي.</p>
+        <p>رحلة التعلم: أقيم حالياً في ألمانيا، حيث أخوض تحدياً يومياً للجمع بين العمل والدراسة وإتقان اللغة الألمانية.</p>
+        <p>أؤمن أن الثقافات المختلفة هي أبواب للمعرفة، لذا أسعى دائماً للانفتاح والتعلم من كل ما هو جديد.</p>
+        <p>فلسفتي في الحياة: رغم صعوبة الظروف والضغط بين الشغل والمدرسة، إلا أنني أؤمن أن "لا شيء مستحيل".</p> 
+        <p>التطور المستمر والتركيز على الذات هما بوصلتي، والاستمرار هو رفيقي في كل خطوة.</p> 
+        
+        
+        <h3>🌏 اللغات</h3>
+        <div class="skill-box">
+            <div class="skill-name"><span>الكردية (اللغة الأم)</span><span>100%</span></div>
+            <div class="skill-bar"><div class="skill-per" style="width: 100%;"></div></div>
+        </div>
+        <div class="skill-box">
+            <div class="skill-name"><span>العربية</span><span>100%</span></div>
+            <div class="skill-bar"><div class="skill-per" style="width: 100%;"></div></div>
+        </div>
+        <div class="skill-box">
+            <div class="skill-name"><span>التركية</span><span>75%</span></div>
+            <div class="skill-bar"><div class="skill-per" style="width: 75%;"></div></div>
+        </div>
+        <div class="skill-box">
+            <div class="skill-name"><span>الألمانية</span><span>50%</span></div>
+            <div class="skill-bar"><div class="skill-per" style="width: 50%;"></div></div>
+        </div>
+        <div class="skill-box">
+            <div class="skill-name"><span>الإنجليزية</span><span>25%</span></div>
+            <div class="skill-bar"><div class="skill-per" style="width: 25%;"></div></div>
+        </div>
+    </div>
+
+    <div id="goals" class="tab-content">
+        <h2>🚀 طموحاتي المستقبلية</h2>
+        <div class="grid">
+            <div class="card">
+                <h3 style="color: var(--accent);">💻 مطور Full-Stack</h3>
+                <p>إتقان تقنيات الويب المتقدمة وبناء حلول برمجية مبتكرة بحلول عام 2027.</p>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--accent);">📖 نشر كتابي الأول</h3>
+                <p>إكمال كتاب "رحلتي" ومشاركته مع العالم ليكون مصدر إلهام للشباب الطموح.</p>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--accent);">🇩🇪 إتقان الألمانية (B1)</h3>
+                <p>الوصول لمستوى الاحتراف اللغوي لتعزيز مسيرتي المهنية في ألمانيا.</p>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--accent);">🎨 دمج الفن بالتقنية</h3>
+                <p>خلق مساحة فنية تجمع بين الرسم اليدوي التقليدي والابتكار الرقمي.</p>
+            </div>
+        </div>
+        <blockquote>"الهدف ليس مجرد حلم، بل هو رؤية وضعت لها خطة زمنية للتنفيذ."</blockquote>
+    </div>
+
+    <div id="art" class="tab-content">
+        <h2>🎨 ركن الإبداع</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>الرسم والريشة</h3>
+                <p>أستخدم الألوان والخطوط لأروي قصصاً لا تستطيع الكلمات وصفها.</p>
+            </div>
+            <div class="card">
+                <h3>الرياضة الذهنية والبدنية</h3>
+                <p>الالتزام بالرياضة هو سر التوازن بين صفاء العقل وقوة الجسد.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="book" class="tab-content">
+        <h2>📖 قصة حياتي (قيد التأليف)</h2>
+        <div class="skill-box">
+            <div class="skill-name"><span>نسبة الإنجاز</span><span>25%</span></div>
+            <div class="skill-bar"><div class="skill-per" style="width: 25%;"></div></div>
+        </div>
+        <div class="card">
+            <p>أعمل حالياً على كتاب يسرد تفاصيل رحلتي من عفرين إلى ألمانيا، متناولاً التحديات والدروس المستفادة.</p>
+            <blockquote>"كل منعطف صعب في حياتي، هو فصل ملهم في كتابي القادم."</blockquote>
+        </div>
+    </div>
+
+    <div id="coding" class="tab-content">
+        <h2>💻 .🛡️ لماذا تختار خدمتي؟</h2>
+         <p>1 الأمان: حماية كاملة للسيرفر من الثغرات المعتادة.</p>
+         <p>2 التخصيص: تنفيذ أي فكرة برمجية تخطر ببالك لتناسب هوية مجتمعك.</p>
+         <p>3 الدعم: متابعة وضمان عمل كافة الأنظمة والبوتات بدون أخطاء تقنية.</p>
+        <div class="grid">
+            <div class="card">
+                <h3>الموقع التعريفي V1.0</h3>
+                <p>أول مشروع متكامل لي، يعتمد على HTML5, CSS3, و JavaScript الحديثة.</p>
+            </div>
+            <div class="card">
+                <h3>مشاريع قادمة</h3>
+                <p>انتظروا المزيد من الأدوات والبرمجيات التي تهدف لتبسيط الحياة الرقمية.</p>
+            </div>
+            <div class="card">
+                <h3> 🛠️تطوير وإدارة سيرفرات ديسكورد </h3>
+                <p>1 ✨  لديسكورد الاحترافية تبدأ من التنظيم.. ابنِ مجتمعك على أساس قوي</p>
+                <p>2 📁 هيكلة القنوات إنشاء وتنسيق الرومات النصية والصوتية ضمن "فئات" منظمة</p>
+                <p>3 🛡️ نظام الرتب والصلاحيات تصميم هرمي للرتب (إدارة، مشرفين، أعضاء، VIP) </p>
+                <p>4 🌐 ميزات المجتمعات إعداد صفحة القوانين وشاشة الترحيب تهيئة رومات الإعلانات الرسمية والبودكاست</p>
+                <p>5 🖼️ تنسيق الرسائل الثابتة  تصميم رسائل القوانين والمعلومات بشكل منسقتوزيع الفواصل البصرية لجعل القراءة مريحة واحترافية</p>
+                <p>6 💡 ملاحظة: هذه الخدمة تركز على "بناء الهيكل" لضمان سيرفر نظيف وخالٍ من أخطاء الأذونات</p>
+            </div>
+    
+            <div class="card">
+                <h3> 🛠️تطوير بوتات سيرفرات الديسكورد </h3>
+                <p>1 🤖 برمجة البوتات (Bots Integration): * إعداد بوتات الحماية لمنع السبام والاختراق</p>
+                <p>2 🤳 برمجة بوتات الترحيب التلقائي ولوحة المتصدرين (Leaderboards).</p>
+                <p>3 💻 ربط السيرفر بتنبيهات السوشيال ميديا (يوتيوب، تويتش، إلخ).</p>
+                <p>4 👌 أنظمة الألعاب والفعاليات: تجهيز رومات مخصصة للبطولات، مع أنظمة نداء (LFG) لتسهيل تلاقي اللاعبين.</p>
+                <p>5 🗃️ التنسيق الجمالي: استخدام الإيموجيات المخصصة والتنسيقات البصرية (Embeds) لجعل السيرفر يبدو جذاباً واحترافياً.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="referrals" class="tab-content">
+        <h2>🔗 منصات العمل والتوصيات</h2>
+        <p>💡 <strong>لماذا هذه الروابط؟</strong> دعمك لي من خلال التسجيل يساعد في استمرار تطوير هذا الموقع وتغطية تكاليف الاستضافة.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>💳 Revolut</h3>
+                <p>سجل واحصل على مزايا حصرية عند طلب بطاقتك الأولى.</p>
+                <a href="https://www.revolut.com/en-DE/referral/?referral-code=nidalkanbar" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">انضم الآن ➔</a>
+            </div>
+            <div class="card">
+                <h3>💳ماستركارد الذهبية</h3>
+                <p>سجل واحصل على مزايا حصرية عند طلب بطاقتك الأولى.</p>
+                <a href="https://refer.gebuhrenfrei.com/t1XUlp" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">انضم الآن ➔</a>
+            </div>
+            <div class="card">
+                <h3>🎓 FreeCodeCamp</h3>
+                <p>منصتي المفضلة لتعلم البرمجة من الصفر مجاناً.</p>
+                <a href="https://www.freecodecamp.org/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">ابدأ التعلم ➔</a>
+            </div>
+            <div class="card">
+                <h3>📱 ACCCAT</h3>
+                <p>رابط الدعوة الخاص بموقع ACCCAT المتميز.</p>
+                <a href="https://www.acccat.com/register?ic=9uk7ov" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">اكتشف الكنز ➔</a>
+            </div>
+            <div class="card">
+                <h3>🎁 كود خصم خاص</h3>
+                <p>استخدم هذا الكود للحصول على خصم 30%:</p>
+                <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 5px; text-align: center; border: 1px dashed var(--accent); margin-top: 10px;">
+                    <strong style="color: var(--accent); letter-spacing: 2px;">NIDAL2026</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="work" class="tab-content">
+        <h2>🤝 لنبني شيئاً معاً</h2>
+        <p>أنا دائماً منفتح للمناقشات التقنية أو التعاون في مشاريع إبداعية. لا تتردد في مراسلتي.</p>
+        <div class="social-links">
+            <a href="https://wa.me/4915211764758" style="border-color: #0cf604;">📱 واتساب</a>
+            <a href="tel:+4915211764758" style="border-color: #00dbf8;">☎️ اتصال مباشر</a>
+            <a href="mailto:nidalkanber20@gmail.com" style="border-color: #2df2aa;">📩إيميل</a>
+        </div>
+    
+        <h2>🌏تابعني على منصات التواصل</h2>
+        <p>خلونا نبقى على تواصل على منصات التواصل الاجتماعي:</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/share/14Vbqq3R443/" style="border-color: #0537ff;">🔵فيسبوك</a>
+            <a href="https://www.instagram.com/nidal_kanbar366" style="border-color: #ff02cc;">📸 انستغرام</a>
+            <a href="https://www.snapchat.com/add/nidal_kanbar?share_id=HaPvPG7TFA4&locale=ar-AE" style="border-color: #f7ff0a;">👻سناب شات</a>
+            <a href="https://discord.gg/EfnPpfaM" style="border-color: #210ece;"> 🪩ديسكورد</a>
+            <a href="https://www.tiktok.com/@nidal.kanbar?_r=1&_t=ZG-948CtUQLPaC" style="border-color: #000000;">🎥تيك توك</a>
+        </div>
+    </div>
+
+    <button class="tab-btn" onclick="openTab(event, 'payment')">الدفع والدعم</button>
+
+<div id="payment" class="tab-content">
+    <div class="milestone" style="background: rgba(0, 210, 255, 0.1); border-color: var(--accent);">
+        <h2>💳 قسم المعاملات المالية</h2>
+        <p>لدعم مشاريعي أو لدفع مستحقات الخدمات البرمجية، يرجى استخدام الوسائل الآمنة أدناه.</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3 style="color: #0070ba;">PayPal</h3>
+            <p>وسيلة الدفع الأسرع عالمياً. يمكنك إرسال المبلغ مباشرة عبر الرابط.</p>
+            <a href="https://www.paypal.me/NIDALKANBAR" target="_blank" class="pay-btn" style="background: #0070ba; display: block; text-align: center; color: white; text-decoration: none; padding: 10px; border-radius: 8px; margin-top: 10px;">دفع عبر PayPal ➔</a>
+        </div>
+
+        <div class="card">
+            <h3 style="color: #00d2ff;">Revolut</h3>
+            <p>أرسل الدفعة باستخدام اسم المستخدم الخاص بي (RevTag):</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 8px; border-radius: 5px; font-family: monospace; text-align: center; margin: 10px 0;">@nidalkanbar</div>
+            <a href="https://revolut.me/nidalkanbar" target="_blank" class="pay-btn" style="background: #00d2ff; display: block; text-align: center; color: white; text-decoration: none; padding: 10px; border-radius: 8px;">فتح Revolut ➔</a>
+        </div>
+
+        <div class="card">
+            <h3 style="color: #f7931a;">USDT (Crypto)</h3>
+            <p>الدفع عبر العملة الرقمية المستقرة (شبكة <strong>TRC20</strong> حصراً):</p>
+            <div id="cryptoAddr" style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 5px; font-family: monospace; font-size: 0.8rem; word-break: break-all; margin: 10px 0; border: 1px dashed #f7931a;">
+                عن قريب
+            </div>
+            <button onclick="copyCrypto()" style="width: 100%; background: #f7931a; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">نسخ العنوان 📋</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyCrypto() {
+        const addr = document.getElementById('cryptoAddr').innerText;
+        navigator.clipboard.writeText(addr).then(() => {
+            alert("تم نسخ عنوان المحفظة بنجاح! يرجى التأكد من استخدام شبكة TRC20.");
+        });
+    }
+</script>
+</div>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+    }
+
+    function openTab(evt, tabName) {
+        const tabContents = document.getElementsByClassName("tab-content");
+        for (let content of tabContents) {
+            content.style.display = "none";
+        }
+        
+        const tabButtons = document.getElementsByClassName("tab-btn");
+        for (let btn of tabButtons) {
+            btn.classList.remove("active");
+        }
+        
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+        
+        // التمرير لأعلى المحتوى عند التبديل في الهواتف
+        window.scrollTo({ top: document.getElementById('mainNav').offsetTop - 20, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
